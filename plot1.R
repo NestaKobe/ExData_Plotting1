@@ -25,13 +25,13 @@ d1<-strptime("2007/02/01", "%Y/%m/%d")
 d2<-strptime("2007/02/02", "%Y/%m/%d")
 
 #Only keep the rows whose dates are between time1 and time2
-household1 <-household[household$Date>=d1 & household$Date<=d2,]
+household <-household[household$Date>=d1 & household$Date<=d2,]
 #View(household1)
 #summary(household1)
 
 
 #Transform the third column into numeric
-household1[,3]<-as.numeric(as.character(household1[,3]))
+household[,3]<-as.numeric(as.character(household1[,3]))
   #-->Error in hist.default(household$Global_active_power, main = "Global Active Power",  : 
   #'x' must be numeric
   
@@ -46,7 +46,7 @@ png("plot1.png", width = 480, height = 480)
 
 
 #Create histogram
-hist(household1$Global_active_power, 
+hist(household$Global_active_power, 
      main="Global Active Power", 
      xlab = "Global Active Power (kilowatts)", 
      col="red")

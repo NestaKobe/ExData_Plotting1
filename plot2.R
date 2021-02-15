@@ -23,22 +23,22 @@ d1<-strptime("2007/02/01", "%Y/%m/%d")
 d2<-strptime("2007/02/02", "%Y/%m/%d")
 
 #Only keep the rows whose dates are between d1 and d2
-household2 <-household[household$Date>=d1 & household$Date<=d2,]
+household <-household[household$Date>=d1 & household$Date<=d2,]
 
 
 #Change the Date & Time column in dataset to POSIXlt
-household2$posix <- as.POSIXct(strptime(paste(household2$Date, household2$Time, sep = " "),
+household$posix <- as.POSIXct(strptime(paste(household$Date, household$Time, sep = " "),
                                 format = "%Y-%m-%d %H:%M:%S"))
 
 #Transform the first column into numeric
-household2[,3]<-as.numeric(as.character(household2[,3]))
+household[,3]<-as.numeric(as.character(household[,3]))
 
 
 #Save plot as plot2.png
 png("plot2.png", width = 480, height = 480)
 
 #Create plot
-with(household2, plot(posix, Global_active_power, 
+with(household, plot(posix, Global_active_power, 
       type = "l",
       xlab="", 
       ylab="Global Active Power (kilowatts)"))
