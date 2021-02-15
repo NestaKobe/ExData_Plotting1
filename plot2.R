@@ -18,7 +18,6 @@ household <-read.csv2("household_power_consumption.txt", na.strings="?")
 #Change the Date column in dataset to POSIXlt
 household$Date<-strptime(household$Date, "%d/%m/%Y")
 
-
 #Data period 2007/02/01 to 2007/02/02
 d1<-strptime("2007/02/01", "%Y/%m/%d")
 d2<-strptime("2007/02/02", "%Y/%m/%d")
@@ -27,10 +26,6 @@ d2<-strptime("2007/02/02", "%Y/%m/%d")
 household2 <-household[household$Date>=d1 & household$Date<=d2,]
 
 
-#Concatenate column Date (1) and Time (2) to a combined column
-household2$DateTime<-do.call(paste, household2[c(1, 2)])
-View(household2)
-
 #Change the Date & Time column in dataset to POSIXlt
 household2$posix <- as.POSIXct(strptime(paste(household2$Date, household2$Time, sep = " "),
                                 format = "%Y-%m-%d %H:%M:%S"))
@@ -38,25 +33,15 @@ household2$posix <- as.POSIXct(strptime(paste(household2$Date, household2$Time, 
 #Transform the first column into numeric
 household2[,3]<-as.numeric(as.character(household2[,3]))
 
-#-->Error in hist.default(household$Global_active_power, main = "Global Active Power",  : 
-#'x' must be numeric
-
-  #Check file for characteristics 
-  #library(dplyr)
-  #cran <- tbl_df(household2)
-  #cran
-
 
 #Save plot as plot2.png
 png("plot2.png", width = 480, height = 480)
-
 
 #Create plot
 with(household2, plot(posix, Global_active_power, 
       type = "l",
       xlab="", 
       ylab="Global Active Power (kilowatts)"))
-
 
 #Closing the png file device - back to default
 dev.off()
